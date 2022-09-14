@@ -168,7 +168,7 @@ pipeline = Pipeline(
                     "type": "RECORD",
                     "mode": "REPEATED",
                     "fields": [
-                        {"name": "amount", "type": "STRING"},
+                        {"name": "amount", "type": "NUMERIC"},
                     ],
                 },
                 {"name": "last_name", "type": "STRING"},
