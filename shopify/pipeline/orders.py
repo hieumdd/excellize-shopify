@@ -67,14 +67,18 @@ pipeline = Pipeline(
                 {
                     "id": refund.get("id"),
                     "created_at": refund.get("created_at"),
-                    "order_adjustments": [
+                    "transactions": [
                         {
-                            "amount": order_adjustment.get("amount"),
+                            "id": transaction.get("id"),
+                            "amount": transaction.get("amount"),
+                            "created_at": transaction.get("created_at"),
+                            "processed_at": transaction.get("processed_at"),
+                            "amount": transaction.get("amount"),
                         }
-                        for order_adjustment in refund["order_adjustments"]
+                        for transaction in refund["transactions"]
                     ]
-                    if refund.get("order_adjustments")
-                    else {},
+                    if refund.get("transactions")
+                    else [],
                 }
                 for refund in row["refunds"]
             ]
@@ -111,12 +115,7 @@ pipeline = Pipeline(
                     "sku": line_item.get("sku"),
                     "title": line_item.get("title"),
                     "quantity": line_item.get("quantity"),
-                    "price_set": {
-                        "amount": line_item["price_set"].get("amount"),
-                        "currency_code": line_item["price_set"].get("currency_code"),
-                    }
-                    if line_item.get("price_set")
-                    else {},
+                    "price": line_item.get("price"),
                 }
                 for line_item in row["line_items"]
             ]
@@ -164,11 +163,14 @@ pipeline = Pipeline(
                 {"name": "id", "type": "NUMERIC"},
                 {"name": "created_at", "type": "TIMESTAMP"},
                 {
-                    "name": "order_adjustments",
+                    "name": "transactions",
                     "type": "RECORD",
                     "mode": "REPEATED",
                     "fields": [
+                        {"name": "id", "type": "NUMERIC"},
                         {"name": "amount", "type": "NUMERIC"},
+                        {"name": "created_at", "type": "TIMESTAMP"},
+                        {"name": "processed_at", "type": "TIMESTAMP"},
                     ],
                 },
                 {"name": "last_name", "type": "STRING"},
@@ -207,15 +209,7 @@ pipeline = Pipeline(
                 {"name": "sku", "type": "STRING"},
                 {"name": "title", "type": "STRING"},
                 {"name": "quantity", "type": "NUMERIC"},
-                {
-                    "name": "price_set",
-                    "type": "RECORD",
-                    "mode": "REPEATED",
-                    "fields": [
-                        {"name": "amount", "type": "NUMERIC"},
-                        {"name": "currency_code", "type": "STRING"},
-                    ],
-                },
+                {"name": "price", "type": "NUMERIC"},
             ],
         },
         {"name": "tags", "type": "STRING"},
