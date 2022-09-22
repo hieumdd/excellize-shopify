@@ -35,6 +35,8 @@ jobs:
 
       - run: |
           echo "VERDA_DENTE_TOKEN: ${{ secrets.VERDA_DENTE_TOKEN }}" >> ${{ env.ENV_FILE }}
+          echo "CARACAMILLA_TOKEN: ${{ secrets.CARACAMILLA_TOKEN }}" >> ${{ env.ENV_FILE }}
+          echo "BESTIESONTOUR_TOKEN: ${{ secrets.BESTIESONTOUR_TOKEN }}" >> ${{ env.ENV_FILE }}
 
           echo "GCP_SA: ${{ env.GCP_SA }}" >> ${{ env.ENV_FILE }}
           echo "PUBLIC_URL: ${{ env.PUBLIC_URL }}" >> ${{ env.ENV_FILE }}
