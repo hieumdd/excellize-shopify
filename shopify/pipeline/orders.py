@@ -169,6 +169,7 @@ pipeline = Pipeline(
                     "fields": [
                         {"name": "id", "type": "NUMERIC"},
                         {"name": "amount", "type": "NUMERIC"},
+                        {"name": "status", "type": "STRING"},
                         {"name": "created_at", "type": "TIMESTAMP"},
                         {"name": "processed_at", "type": "TIMESTAMP"},
                     ],
